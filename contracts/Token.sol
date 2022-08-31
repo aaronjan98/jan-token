@@ -7,6 +7,6 @@ contract Token {
     string public name = "Jan Token";
     string public symbol = "JAN";
     uint256 public decimals = 18;
-    // TotalSupply
+    uint256 public totalSupply = 1000000 * (10**decimals);
 }
 

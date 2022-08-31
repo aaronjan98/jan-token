@@ -18,7 +18,12 @@ describe('Token', () => {
     })
 
     it('has correct decimals', async () => {
-        expect(await token.decimals()).to.equal(18)
+        expect(await token.decimals()).to.equal('18')
+    })
+
+    it('has correct total supply', async () => {
+        const value = ethers.utils.parseUnits('1000000', 'ether')
+        expect(await token.totalSupply()).to.equal(value)
     })
 })
 
