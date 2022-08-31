@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/jan/code/jan-token/contracts/Token.sol": {
-      "lastModificationDate": 1661987602051,
-      "contentHash": "b6151bc2335d19033faff9991d4b0c53",
+      "lastModificationDate": 1661988276664,
+      "contentHash": "aa6e518bac799d5bf0c6d475d4728441",
       "sourceName": "contracts/Token.sol",
       "solcConfig": {
         "version": "0.8.9",

@@ -16,5 +16,9 @@ describe('Token', () => {
     it('has correct symbol', async () => {
         expect(await token.symbol()).to.equal('JAN')
     })
+
+    it('has correct decimals', async () => {
+        expect(await token.decimals()).to.equal(18)
+    })
 })
 
