@@ -1,0 +1,64 @@
+.exit
+ethers.utils.formatEther(balance.toString())
+balance.toString()
+balance
+const balance = await ethers.provider.getBalance(accounts[0].address)
+accounts[0].address
+accounts[0]
+const accounts = await ethers.getSigners()
+name
+const name = await token.name()
+token.name
+token.address
+token
+const token = await ethers.getContractAt("Token", "0x5fbdb2315678afecb367f032d93f642f64180aa3")
+exit
+const balance = await ethers.provider.getBalance(accounts[0].address)
+accounts[0].address
+accounts[0]
+balance.toString()
+balance.then(e => e)
+balance.then()
+balance.valueOf()
+balance.valueOf
+balance.toString()
+balance
+ethers.utils.formatEther(balance)
+const balance = await ethers.provider.getBalance(accounts[0].address)
+const balance = await = ethers.provider.getBalance(accounts[0].address)
+const balance = await ethers.provider.getBalance(accounts[0].address)
+ethers.utils.formatEther(balance.toString())
+await balance.toString()
+balance
+balance.toString()
+balance.value.toString()
+balance.toString()
+balance.toString
+balance
+const balance = await = ethers.provider.getBalance(accounts[0].address)
+ethers.provider.getBalance(accounts[0].address)
+accounts[19].address
+accounts[0].address
+accounts[0]
+const accounts = await ethers.getSigners()
+token
+const accounts = await ethers.getSigners()
+let accounts = await ethers.getSigners()
+const accounts = await ethers.getSigners()
+const accounts = await ethers.getSigner()
+const accounts = await ethers.getSigners()
+accounts
+let accounts = await ethers.getSigners()
+uint accounts = await ethers.getSigners()
+accounts
+const accounts = await ethers.getSigners()
+const accounts = await.ethers.getSigners()
+name
+const name = await token.name()
+await token.name()
+token.name()
+token.name
+token.address
+token
+const token = await ethers.getContractAt("Token", "0x5fbdb2315678afecb367f032d93f642f64180aa3")
+.help
