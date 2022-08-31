@@ -5,5 +5,6 @@ import "hardhat/console.sol";
 
 contract Token {
     string public name = "Jan Token";
+    string public symbol = "JAN";
 }
 
