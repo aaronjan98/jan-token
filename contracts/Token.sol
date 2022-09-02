@@ -54,6 +54,8 @@ contract Token {
         public
         returns(bool success)
         {
+            require(_spender != address(0));
+
             allowance[msg.sender][_spender] = _value;
 
             emit Approval(msg.sender, _spender, _value);
