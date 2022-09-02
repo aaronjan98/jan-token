@@ -18,6 +18,12 @@ contract Token {
         uint256 value
     );
 
+    event Approval(
+        address indexed owner,
+        address indexed spender,
+        uint256 value
+    );
+
     constructor(
         string memory _name,
         string memory _symbol,
@@ -49,6 +55,8 @@ contract Token {
         returns(bool success)
         {
             allowance[msg.sender][_spender] = _value;
+
+            emit Approval(msg.sender, _spender, _value);
             return true;
         }
 }
