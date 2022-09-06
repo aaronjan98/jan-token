@@ -1,8 +1,8 @@
 # Decentralized Exchange Checklist
 
-- [ ] Deposit Tokens
-- [ ] Withdraw Tokens
-- [ ] Check Balances
+- [x] Deposit Tokens
+- [x] Withdraw Tokens
+- [x] Check Balances
 - [ ] Make Orders
 - [ ] Cancel Orders
 - [ ] Fill Orders
