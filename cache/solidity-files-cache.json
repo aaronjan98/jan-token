@@ -74,8 +74,8 @@
       ]
     },
     "/Users/jan/code/jan-token/contracts/Exchange.sol": {
-      "lastModificationDate": 1662504100845,
-      "contentHash": "dca39b9bb7d612f1d83c3d2d25573b18",
+      "lastModificationDate": 1662674512297,
+      "contentHash": "61ac2741c1075e194d409911d698d313",
       "sourceName": "contracts/Exchange.sol",
       "solcConfig": {
         "version": "0.8.9",
