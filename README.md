@@ -3,8 +3,8 @@
 - [x] Deposit Tokens
 - [x] Withdraw Tokens
 - [x] Check Balances
-- [ ] Make Orders
-- [ ] Cancel Orders
+- [x] Make Orders
+- [x] Cancel Orders
 - [ ] Fill Orders
 - [ ] Charge Fees
 - [x] Track Fee Account
