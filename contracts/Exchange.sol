@@ -158,5 +158,38 @@ contract Exchange {
             block.timestamp
         );
     }
+
+    // ------------------------
+    // EXECUTING ORDERS
+
+    function fillOrder(uint256 _id) public {
+        // Fetch order
+        _Order storage _order = orders[_id];
+
+        // Execute the trade
+        _trade(
+            _order.id,
+            _order.user,
+            _order.tokenGet,
+            _order.tokenGive,
+            _order.amoutGive
+        );
+    }
+
+    function _trade(
+        uint256 _orderId,
+        address _user,
+        address _tokenGet,
+        uint256 _amountGet,
+        address _tokenGive,
+        uint256 _amountGive
+    ) internal {
+        tokens[_tokenGet][msg.sender] = tokens[_tokenGet][msg.sender] - _amountGet;
+        tokens[_tokenGet][user] = tokens[_tokenGet][user] + _amountGet;
+
+        tokens[_tokenGive][_user] = tokens[_tokenGive][_user] - _amountGive;
+        tokens[_tokenGive][msg.sender] = tokens[_tokenGive][msg.sender] + _amountGive;
+    }
+
 }
 

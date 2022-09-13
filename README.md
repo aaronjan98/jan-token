@@ -5,6 +5,6 @@
 - [x] Check Balances
 - [x] Make Orders
 - [x] Cancel Orders
-- [ ] Fill Orders
-- [ ] Charge Fees
+- [/] Fill Orders
+- [/] Charge Fees
 - [x] Track Fee Account
