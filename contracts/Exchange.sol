@@ -184,11 +184,27 @@ contract Exchange {
         address _tokenGive,
         uint256 _amountGive
     ) internal {
-        tokens[_tokenGet][msg.sender] = tokens[_tokenGet][msg.sender] - _amountGet;
+        // Fee is paid by the user who f8illed the order (msg.sender)
+        // Fee is deducted from _amountGet
+        uint256 _feeAmount = (_amountGet * feePercent) / 100;
+
+        // Execute the trade
+        // msg.sender is the user who filled the order, while _user is who created the order
+        tokens[_tokenGet][msg.sender] =
+            tokens[_tokenGet][msg.sender] -
+            (_amountGet + _feeAmount);
+
         tokens[_tokenGet][user] = tokens[_tokenGet][user] + _amountGet;
 
+        // Charge fees
+        tokens[_tokenGet][feeAccount] =
+            tokens[_tokenGet][feeAccount] +
+            _feeAmount;
+
         tokens[_tokenGive][_user] = tokens[_tokenGive][_user] - _amountGive;
-        tokens[_tokenGive][msg.sender] = tokens[_tokenGive][msg.sender] + _amountGive;
+        tokens[_tokenGive][msg.sender] =
+            tokens[_tokenGive][msg.sender] +
+            _amountGive;
     }
 
 }
