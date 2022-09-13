@@ -24,7 +24,6 @@ contract Exchange {
         uint256 amount,
         uint256 balance
     );
-
     event Order(
         uint256 id,
         address user,
@@ -34,7 +33,6 @@ contract Exchange {
         uint256 amountGive,
         uint256 timestamp
     );
-
     event Cancel(
         uint256 id,
         address user,
@@ -42,6 +40,16 @@ contract Exchange {
         uint256 amountGet,
         address tokenGive,
         uint256 amountGive,
+        uint256 timestamp
+    );
+    event Trade(
+        uint256 id,
+        address user,
+        address tokenGet,
+        uint256 amountGet,
+        address tokenGive,
+        uint256 amountGive,
+        address creator,
         uint256 timestamp
     );
 
