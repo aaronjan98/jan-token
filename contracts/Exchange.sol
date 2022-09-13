@@ -171,8 +171,9 @@ contract Exchange {
             _order.id,
             _order.user,
             _order.tokenGet,
+            _order.amountGet,
             _order.tokenGive,
-            _order.amoutGive
+            _order.amountGive
         );
     }
 
@@ -194,7 +195,7 @@ contract Exchange {
             tokens[_tokenGet][msg.sender] -
             (_amountGet + _feeAmount);
 
-        tokens[_tokenGet][user] = tokens[_tokenGet][user] + _amountGet;
+        tokens[_tokenGet][_user] = tokens[_tokenGet][_user] + _amountGet;
 
         // Charge fees
         tokens[_tokenGet][feeAccount] =
