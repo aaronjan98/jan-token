@@ -275,7 +275,7 @@ describe('Exchange', () => {
                 result = await transaction.wait()
             })
 
-            it('Executes the trade and charge fees', async () => {
+            it('executes the trade and charge fees', async () => {
                 // Check balances for Token Give
                 expect(await exchange.balanceOf(token1.address, user1.address)).to.equal(tokens(0))
                 expect(await exchange.balanceOf(token1.address, user2.address)).to.equal(tokens(1))
@@ -284,6 +284,10 @@ describe('Exchange', () => {
                 expect(await exchange.balanceOf(token2.address, user1.address)).to.equal(tokens(1))
                 expect(await exchange.balanceOf(token2.address, user2.address)).to.equal(tokens(0.9))
                 expect(await exchange.balanceOf(token2.address, feeAccount.address)).to.equal(tokens(0.1))
+            })
+
+            it('updates filled orders', async () => {
+                expect(await exchange.orderFilled(1)).to.equal(true)
             })
 
             it('emits a Trade event', async () => {

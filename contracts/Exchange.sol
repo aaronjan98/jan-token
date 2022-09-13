@@ -11,6 +11,7 @@ contract Exchange {
     mapping(uint256 => _Order) public orders;
     uint256 public orderCount;
     mapping(uint256 => bool) public orderCancelled;
+    mapping(uint256 => bool) public orderFilled;
 
     event Deposit(
         address token,
@@ -183,6 +184,9 @@ contract Exchange {
             _order.tokenGive,
             _order.amountGive
         );
+
+        // Mark order as filled
+        orderFilled[_order.id] = true;
     }
 
     function _trade(
