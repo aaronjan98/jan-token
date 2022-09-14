@@ -172,6 +172,13 @@ contract Exchange {
     // EXECUTING ORDERS
 
     function fillOrder(uint256 _id) public {
+        // 1. Must be valid orderId
+        require(_id > 0 && _id <= orderCount, 'Order does not exist');
+        // 2. Order can't be filled
+        require(!orderFilled[_id]);
+        // 3. Order can't be cancelled
+        require(!orderCancelled[_id]);
+
         // Fetch order
         _Order storage _order = orders[_id];
 
