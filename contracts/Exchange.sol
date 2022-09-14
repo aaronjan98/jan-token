@@ -120,7 +120,7 @@ contract Exchange {
         require(balanceOf(_tokenGive, msg.sender) >= _amountGive);
 
         // Instantiate new order
-        orderCount = orderCount + 1;
+        orderCount ++;
         orders[orderCount] = _Order(
             orderCount,
             msg.sender,
