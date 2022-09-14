@@ -313,6 +313,13 @@ describe('Exchange', () => {
                     const invalidOrderId = 99999
                     await expect(exchange.connect(user2).fillOrder(invalidOrderId)).to.be.reverted
                 })
+
+                it('Rejects already filled orders', async () => {
+                    transaction = await exchange.connect(user2).fillOrder(1)
+                    await transaction.wait()
+
+                    await expect(exchange.connect(user2).fillOrder(1)).to.be.reverted
+                })
             })
         })
     })
