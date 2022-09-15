@@ -1,9 +1,7 @@
 const { expect } = require('chai');
 const { ethers } = require('hardhat');
+const { tokens } = require('../common/tokens.js');
 
-const tokens = (n) => {
-    return ethers.utils.parseUnits(n.toString(), 'ether')
-}
 
 describe('Token', () => {
     let token, accounts, deployer, receiver, exchange
