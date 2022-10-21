@@ -1,8 +1,8 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.9;
 
-import "hardhat/console.sol";
-import "./Token.sol";
+import 'hardhat/console.sol';
+import './Token.sol';
 
 contract Exchange {
     address public feeAccount;
@@ -13,12 +13,7 @@ contract Exchange {
     mapping(uint256 => bool) public orderCancelled;
     mapping(uint256 => bool) public orderFilled;
 
-    event Deposit(
-        address token,
-        address user,
-        uint256 amount,
-        uint256 balance
-    );
+    event Deposit(address token, address user, uint256 amount, uint256 balance);
     event Withdraw(
         address token,
         address user,
@@ -120,7 +115,7 @@ contract Exchange {
         require(balanceOf(_tokenGive, msg.sender) >= _amountGive);
 
         // Instantiate new order
-        orderCount ++;
+        orderCount++;
         orders[orderCount] = _Order(
             orderCount,
             msg.sender,
@@ -237,6 +232,4 @@ contract Exchange {
             block.timestamp
         );
     }
-
 }
-

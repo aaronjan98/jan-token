@@ -25,7 +25,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prettier": "prettier --write 'contracts/*.sol'",
+    "solhint": "./node_modules/.bin/solhint -f table 'contracts/**/*.sol'",
+    "prettier:solidity": "./node_modules/.bin/prettier --write contracts/*.sol"
   },
   "eslintConfig": {
     "extends": [
@@ -50,6 +53,10 @@
     "@nomiclabs/hardhat-ethers": "^2.0.5",
     "chai": "^4.3.6",
     "ethers": "^5.5.4",
-    "hardhat": "^2.10.1"
+    "hardhat": "^2.10.1",
+    "prettier": "^2.7.1",
+    "prettier-plugin-solidity": "^1.0.0-beta.24",
+    "solhint": "^3.3.7",
+    "solhint-plugin-prettier": "^0.0.5"
   }
 }

@@ -3,6 +3,26 @@ ethers.utils.formatEther(balance.toString())
 balance.toString()
 balance
 const balance = await ethers.provider.getBalance(accounts[0].address)
+const balance = await ethers.provider.getBalance.getBalance(accounts[0].address)
+accounts[0].address
+accounts[19].address
+accounts[0].address
+accounts[0]
+const accounts = await ethers.getSigners()
+await token.name()
+token.name()
+token.name
+h
+token.address
+token
+const token = await ethers.getContractAt("Token", "0x5fbdb2315678afecb367f032d93f642f64180aa3")
+Token
+ethers.getContractAt("Token", "0x5fbdb2315678afecb367f032d93f642f64180aa3")
+.exit
+ethers.utils.formatEther(balance.toString())
+balance.toString()
+balance
+const balance = await ethers.provider.getBalance(accounts[0].address)
 accounts[0].address
 accounts[0]
 const accounts = await ethers.getSigners()

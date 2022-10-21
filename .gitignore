@@ -46,6 +46,9 @@ logs
 
 node_modules
 bower_components
+package-lock.json
+cache
+artifacts
 
 *.sublime*
 
