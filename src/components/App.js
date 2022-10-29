@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import { ethers } from 'ethers';
 
+import TOKEN_ABI from '../abis/Token.json';
 import '../App.css';
+import config from '../config.json';
 
 const { ethereum } = window;
 
@@ -14,8 +16,19 @@ const connectWallet = async () => {
     console.log(account);
 
     // Connect Ethers to blockchain
+    const provider = new ethers.providers.Web3Provider(ethereum);
+    const { chainId } = await provider.getNetwork();
+    console.log({ chainId });
 
-    // talk to Token Smart Contract
+    // Talk to Token Smart Contract
+    const token = new ethers.Contract(
+      config[chainId].Jan.address,
+      TOKEN_ABI,
+      provider
+    );
+    console.log(token.address);
+    const symbol = await token.symbol();
+    console.log(symbol);
   } catch (error) {
     console.log(error);
 
