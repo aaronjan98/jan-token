@@ -1,33 +1,28 @@
 import { useEffect } from 'react';
-import { ethers } from 'ethers';
+import { useDispatch } from 'react-redux';
 
-import TOKEN_ABI from '../abis/Token.json';
 import config from '../config.json';
+import {
+  loadProvider,
+  loadNetwork,
+  loadAccount,
+  loadToken,
+} from '../store/interactions.js';
 
 const { ethereum } = window;
 
-const connectWallet = async () => {
+const connectWallet = async dispatch => {
   try {
     if (!ethereum) return console.log('Please install metamask');
 
-    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-    const account = accounts[0];
-    console.log(account);
+    await loadAccount(dispatch);
 
     // Connect Ethers to blockchain
-    const provider = new ethers.providers.Web3Provider(ethereum);
-    const { chainId } = await provider.getNetwork();
-    console.log({ chainId });
+    const provider = loadProvider(dispatch);
+    const chainId = await loadNetwork(provider, dispatch);
 
     // Talk to Token Smart Contract
-    const token = new ethers.Contract(
-      config[chainId].Jan.address,
-      TOKEN_ABI,
-      provider
-    );
-    console.log(token.address);
-    const symbol = await token.symbol();
-    console.log(symbol);
+    await loadToken(provider, config[chainId].Jan.address, dispatch);
   } catch (error) {
     console.log(error);
 
@@ -36,8 +31,10 @@ const connectWallet = async () => {
 };
 
 function App() {
+  const dispatch = useDispatch();
+
   const loadBlockchainData = async () => {
-    connectWallet();
+    connectWallet(dispatch);
   };
 
   useEffect(() => {
