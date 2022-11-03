@@ -6,7 +6,8 @@ import {
   loadProvider,
   loadNetwork,
   loadAccount,
-  loadToken,
+  loadTokens,
+  loadExchange,
 } from '../store/interactions.js';
 
 const { ethereum } = window;
@@ -22,7 +23,13 @@ const connectWallet = async dispatch => {
     const chainId = await loadNetwork(provider, dispatch);
 
     // Talk to Token Smart Contract
-    await loadToken(provider, config[chainId].Jan.address, dispatch);
+    const Jan = config[chainId].Jan;
+    const mETH = config[chainId].mETH;
+    await loadTokens(provider, [Jan.address, mETH.address], dispatch);
+
+    // Load exchange contract
+    const exchangeConfig = config[chainId].exchange;
+    await loadExchange(provider, exchangeConfig.address, dispatch);
   } catch (error) {
     console.log(error);
 
