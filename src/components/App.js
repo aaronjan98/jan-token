@@ -10,6 +10,8 @@ import {
   loadExchange,
 } from '../store/interactions.js';
 
+import Navbar from './Navbar';
+
 const { ethereum } = window;
 
 const connectWallet = async dispatch => {
@@ -19,20 +21,29 @@ const connectWallet = async dispatch => {
     // Connect Ethers to blockchain
     const provider = loadProvider(dispatch);
 
-    // Fetch current network's chainId e.g. hardhat: 31337, kovan: 42
+    // Fetch current network's chainId e.g. hardhat: 31337, goerli: 5
     const chainId = await loadNetwork(provider, dispatch);
 
-    // Fetch current account & balance from Metamask
-    await loadAccount(provider, dispatch);
+    // Reload page when network changes
+    window.ethereum.on('chainChanged', () => {
+      window.location.reload();
+    });
 
-    // Load token smart contract
-    const Jan = config[chainId].Jan;
-    const mETH = config[chainId].mETH;
-    await loadTokens(provider, [Jan.address, mETH.address], dispatch);
+    // Fetch current account & balance from Metamask when changed
+    window.ethereum.on('accountsChanged', () => {
+      loadAccount(provider, dispatch);
+    });
 
-    // Load exchange smart contract
-    const exchangeConfig = config[chainId].exchange;
-    await loadExchange(provider, exchangeConfig.address, dispatch);
+    if (config[chainId] === '31337') {
+      // Load token smart contract
+      const Jan = config[chainId].Jan;
+      const mETH = config[chainId].mETH;
+      await loadTokens(provider, [Jan.address, mETH.address], dispatch);
+
+      // Load exchange smart contract
+      const exchangeConfig = config[chainId].exchange;
+      await loadExchange(provider, exchangeConfig.address, dispatch);
+    }
   } catch (error) {
     console.log(error);
 
@@ -53,7 +64,7 @@ function App() {
 
   return (
     <div>
-      {/* Navbar */}
+      <Navbar />
 
       <main className="exchange grid">
         <section className="exchange__section--left grid">
