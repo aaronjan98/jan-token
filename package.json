@@ -27,7 +27,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier": "prettier --write 'contracts/*.sol'",
-    "solhint": "./node_modules/.bin/solhint -f table 'contracts/**/*.sol'",
+    "solhint": "./node_modules/.bin/solhint -f table 'contracts/*.sol'",
     "prettier:solidity": "./node_modules/.bin/prettier --write contracts/*.sol"
   },
   "eslintConfig": {
