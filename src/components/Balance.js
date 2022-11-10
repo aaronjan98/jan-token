@@ -9,9 +9,13 @@ const Balance = () => {
     const dispatch = useDispatch()
 
     const account = useSelector(state => state.provider.account)
+
     const exchange = useSelector(state => state.exchange.contract)
+    const exchangeBalances = useSelector(state => state.exchange.balances)
+
     const tokens = useSelector(state => state.tokens.contracts)
     const symbols = useSelector(state => state.tokens.symbols)
+    const tokenBalances = useSelector(state => state.tokens.balances)
 
     useEffect(() => {
         if (exchange && tokens[0] && tokens[1] && account) {
@@ -32,13 +36,25 @@ const Balance = () => {
             {/* Deposit/Withdraw Component 1 (DApp) */}
 
             <div className="exchange__transfers--form">
-                <div className="flex-between"></div>
-                <p>
-                    <small>Token</small>
-                    <br />
-                    <img src={dapp} alt="Token Logo" />
-                    {symbols && symbols[0]}
-                </p>
+                <div className="flex-between">
+                    <p>
+                        <small>Token</small>
+                        <br />
+                        <img src={dapp} alt="Token Logo" />
+                        {symbols && symbols[0]}
+                    </p>
+                    <p>
+                        <small>Wallet</small>
+                        <br />
+                        {tokenBalances && tokenBalances[0]}
+                    </p>
+                    <p>
+                        <small>Exchange</small>
+                        <br />
+                        {exchangeBalances && exchangeBalances[0]}
+                    </p>
+                </div>
+
                 <form>
                     <label htmlFor="token0"></label>
                     <input type="text" id="token0" placeholder="0.0000" />
