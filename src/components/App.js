@@ -8,6 +8,7 @@ import {
     loadAccount,
     loadTokens,
     loadExchange,
+    subscribeToEvents,
 } from '../store/interactions.js'
 
 import Navbar from './Navbar'
@@ -44,8 +45,15 @@ const connectWallet = async dispatch => {
 
         // Load exchange smart contract
         const exchangeConfig = config[chainId].exchange
-        await loadExchange(provider, exchangeConfig.address, dispatch)
+        const exchange = await loadExchange(
+            provider,
+            exchangeConfig.address,
+            dispatch
+        )
         // }
+
+        // Listen to events
+        subscribeToEvents(exchange, dispatch)
     } catch (error) {
         console.log(error)
 
