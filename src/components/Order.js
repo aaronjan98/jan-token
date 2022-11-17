@@ -1,38 +1,47 @@
-import { useState, useRef } from 'react';
+import { useState, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { makeBuyOrder, makeSellOrder } from '../store/interactions'
 
 const Order = () => {
-  const [isBuy, setIsBuy] = useState(true);
-  const [amount, setAmount] = useState(0);
-  const [price, setPrice] = useState(0);
+  const [isBuy, setIsBuy] = useState(true)
+  const [amount, setAmount] = useState(0)
+  const [price, setPrice] = useState(0)
 
-  const buyRef = useRef(null);
-  const sellRef = useRef(null);
+  const provider = useSelector(state => state.provider.connection)
+  const tokens = useSelector(state => state.tokens.contracts)
+  const exchange = useSelector(state => state.exchange.contract)
+
+  const dispatch = useDispatch()
+
+  const buyRef = useRef(null)
+  const sellRef = useRef(null)
 
   const tabHandler = e => {
     if (e.target.className !== buyRef.current.className) {
-      e.target.className = 'tab tab--active';
-      buyRef.current.className = 'tab';
-      setIsBuy(false);
+      e.target.className = 'tab tab--active'
+      buyRef.current.className = 'tab'
+      setIsBuy(false)
     } else {
-      e.target.className = 'tab tab--active';
-      sellRef.current.className = 'tab';
-      setIsBuy(true);
+      e.target.className = 'tab tab--active'
+      sellRef.current.className = 'tab'
+      setIsBuy(true)
     }
-  };
+  }
 
   const buyHandler = e => {
-    e.preventDefault();
-    console.log('buyHandler...');
-    setAmount(0);
-    setPrice(0);
-  };
+    e.preventDefault()
+    makeBuyOrder(provider, exchange, tokens, { amount, price }, dispatch)
+    setAmount(0)
+    setPrice(0)
+  }
 
   const sellHandler = e => {
-    e.preventDefault();
-    console.log('sellHandler...');
-    setAmount(0);
-    setPrice(0);
-  };
+    e.preventDefault()
+    makeSellOrder(provider, exchange, tokens, { amount, price }, dispatch)
+    setAmount(0)
+    setPrice(0)
+  }
 
   return (
     <div className="component exchange__orders">
@@ -82,7 +91,7 @@ const Order = () => {
         </button>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default Order;
+export default Order
