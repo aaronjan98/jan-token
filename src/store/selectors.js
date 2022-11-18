@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect'
 import { get } from 'lodash'
+import moment from 'moment'
 import { ethers } from 'ethers'
 
 const tokens = state => get(state, 'tokens.contracts')
@@ -24,7 +25,8 @@ const decorateOrder = (order, tokens) => {
     ...order,
     token0Amount: ethers.utils.formatEther(token0Amount, 'ethers'),
     token1Amount: ethers.utils.formatEther(token1Amount, 'ethers'),
-    tokenPrice
+    tokenPrice,
+    fromatedTimestamp: moment.unix(order.timestamp).format('h:mm:ssa d MMM D')
   })
 }
 
@@ -50,9 +52,26 @@ export const orderBookSelector = createSelector(
     )
 
     // Decorate orders
-    orders.map(order => {
-      let o = decorateOrder(order, tokens)
-      console.log(o)
-    })
+    orders = decorateOrderBookOrders(orders, tokens)
+    console.log(orders)
   }
 )
+
+const decorateOrderBookOrders = (orders, tokens) => {
+  return(
+    orders.map(order => {
+      order = decorateOrder(order, tokens)
+      order = decorateOrderBookOrder(order, tokens)
+      return order
+    })
+  )
+}
+
+const decorateOrderBookOrder = (order, tokens) => {
+  const orderType = order.tokenGive === tokens[1].address ? 'buy' : 'sell'
+
+  return({
+    ...order,
+    orderType
+  })
+}
