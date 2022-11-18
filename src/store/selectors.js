@@ -1,14 +1,30 @@
 import { createSelector } from 'reselect'
-import { get, groupBy } from 'lodash'
+import { get, groupBy, reject } from 'lodash'
 import moment from 'moment'
 import { ethers } from 'ethers'
-
-const tokens = state => get(state, 'tokens.contracts')
-const allOrders = state => get(state, 'exchange.allOrders.data', [])
 
 const GREEN = '#25CE8F'
 const RED = '#F45353'
 
+const tokens = state => get(state, 'tokens.contracts')
+
+const allOrders = state => get(state, 'exchange.allOrders.data', [])
+const cancelledOrders = state => get(state, 'exchange.cancelledOrders.data', [])
+const filledOrders = state => get(state, 'exchange.filledOrders.data', [])
+
+const openOrders = state => {
+  const all = allOrders(state)
+  const filled = filledOrders(state)
+  const cancelled = cancelledOrders(state)
+
+  const openOrders = reject(all, order => {
+    const orderFilled = filled.some(o => o.id.toString() === order.id.toString())
+    const orderCancelled = cancelled.some(o => o.id.toString() === order.id.toString())
+    return(orderFilled || orderCancelled)
+  })
+
+  return openOrders
+}
 
 const decorateOrder = (order, tokens) => {
   let token0Amount, token1Amount
@@ -39,7 +55,7 @@ const decorateOrder = (order, tokens) => {
  */
 
 export const orderBookSelector = createSelector(
-  allOrders,
+  openOrders,
   tokens,
   (orders, tokens) => {
     if (!tokens[0] || !tokens[1]) {
@@ -48,11 +64,11 @@ export const orderBookSelector = createSelector(
 
     // Filter orders by selected tokens
     orders = orders.filter(
-      o => o.tokenGet === tokens[0].address || o.tokenGet === tokens[1].address
+      orders => orders.tokenGet === tokens[0].address || orders.tokenGet === tokens[1].address
     )
     orders = orders.filter(
-      o =>
-        o.tokenGive === tokens[0].address || o.tokenGive === tokens[1].address
+      orders =>
+        orders.tokenGive === tokens[0].address || orders.tokenGive === tokens[1].address
     )
 
     // Decorate orders
