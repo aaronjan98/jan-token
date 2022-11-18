@@ -1,10 +1,14 @@
 import { createSelector } from 'reselect'
-import { get } from 'lodash'
+import { get, groupBy } from 'lodash'
 import moment from 'moment'
 import { ethers } from 'ethers'
 
 const tokens = state => get(state, 'tokens.contracts')
 const allOrders = state => get(state, 'exchange.allOrders.data', [])
+
+const GREEN = '#25CE8F'
+const RED = '#F45353'
+
 
 const decorateOrder = (order, tokens) => {
   let token0Amount, token1Amount
@@ -53,7 +57,29 @@ export const orderBookSelector = createSelector(
 
     // Decorate orders
     orders = decorateOrderBookOrders(orders, tokens)
-    console.log(orders)
+
+    // Group orders by "orderType"
+    orders = groupBy(orders, 'orderType')
+
+    // Fetch buy orders
+    const buyOrders = get(orders, 'buy', [])
+
+    // Sort buy orders by token price
+    orders = {
+      ...orders,
+      buyOrders: buyOrders.sort((a, b) => b.tokenPrice - a.tokenPrice)
+    }
+
+    // Fetch sell orders
+    const sellOrders = get(orders, 'sell', [])
+    
+    // Sort sell orders by token price
+    orders = {
+      ...orders,
+      sellOrders: sellOrders.sort((a, b) => b.tokenPrice - a.tokenPrice)
+    }
+
+    return orders
   }
 )
 
@@ -72,6 +98,8 @@ const decorateOrderBookOrder = (order, tokens) => {
 
   return({
     ...order,
-    orderType
+    orderType,
+    orderTypeClass: (orderType === 'buy' ? GREEN : RED),
+    orderFillAction: (orderType === 'buy' ? 'sell' : 'buy')
   })
 }
