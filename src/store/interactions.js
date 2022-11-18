@@ -104,6 +104,20 @@ export const loadBalances = async (exchange, tokens, account, dispatch) => {
 }
 
 /*
+ * LOAD ALL ORDERS
+ */
+
+export const loadAllOrders = async (provider, exchange, dispatch) => {
+  const block = await provider.getBlockNumber()
+
+  // Fetch all orders
+  const orderStream = await exchange.queryFilter('Order', 0, block)
+  const allOrders = orderStream.map(event => event.args)
+
+  dispatch({ type: 'ALL_ORDERS_LOADED', allOrders })
+}
+
+/*
  * TRANSFER TOKENS (DEPOSIT & WITHDRAWS)
  */
 

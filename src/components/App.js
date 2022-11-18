@@ -1,77 +1,82 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
-import config from '../config.json';
+import config from '../config.json'
 import {
   loadProvider,
   loadNetwork,
   loadAccount,
   loadTokens,
   loadExchange,
+  loadAllOrders,
   subscribeToEvents,
-} from '../store/interactions.js';
+} from '../store/interactions.js'
 
-import Navbar from './Navbar';
-import Markets from './Markets';
-import Balance from './Balance';
-import Order from './Order';
+import Navbar from './Navbar'
+import Markets from './Markets'
+import Balance from './Balance'
+import Order from './Order'
+import OrderBook from './OrderBook'
 
-const { ethereum, location } = window;
+const { ethereum, location } = window
 
 const connectWallet = async dispatch => {
   try {
-    if (!ethereum) return console.log('Please install metamask');
+    if (!ethereum) return console.log('Please install metamask')
 
     // Connect Ethers to blockchain
-    const provider = loadProvider(dispatch);
+    const provider = loadProvider(dispatch)
 
     // Fetch current network's chainId e.g. hardhat: 31337, goerli: 5
-    const chainId = await loadNetwork(provider, dispatch);
+    const chainId = await loadNetwork(provider, dispatch)
 
     // Reload page when network changes
     ethereum.on('chainChanged', () => {
-      location.reload();
-    });
+      location.reload()
+    })
 
     // Fetch current account & balance from Metamask when changed
     ethereum.on('accountsChanged', () => {
-      loadAccount(provider, dispatch);
-    });
+      loadAccount(provider, dispatch)
+    })
 
     // if (config[chainId] === '31337') {
     // Load token smart contracts
-    const Jan = config[chainId].Jan;
-    const mETH = config[chainId].mETH;
-    await loadTokens(provider, [Jan.address, mETH.address], dispatch);
+    const Jan = config[chainId].Jan
+    const mETH = config[chainId].mETH
+    await loadTokens(provider, [Jan.address, mETH.address], dispatch)
 
     // Load exchange smart contract
-    const exchangeConfig = config[chainId].exchange;
+    const exchangeConfig = config[chainId].exchange
     const exchange = await loadExchange(
       provider,
       exchangeConfig.address,
       dispatch
-    );
+    )
     // }
 
-    // Listen to events
-    subscribeToEvents(exchange, dispatch);
-  } catch (error) {
-    console.log(error);
+    // Fetch all orders: open, filled, cancelled
+    loadAllOrders(provider, exchange, dispatch)
 
-    throw new Error('No ethereum object');
+    // Listen to events
+    subscribeToEvents(exchange, dispatch)
+  } catch (error) {
+    console.log(error)
+
+    throw new Error('No ethereum object')
   }
-};
+}
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const loadBlockchainData = async () => {
-    connectWallet(dispatch);
-  };
+    connectWallet(dispatch)
+  }
 
   useEffect(() => {
-    loadBlockchainData();
-  });
+    loadBlockchainData()
+  })
 
   return (
     <div>
@@ -92,13 +97,13 @@ function App() {
 
           {/* Trades */}
 
-          {/* OrderBook */}
+          <OrderBook />
         </section>
       </main>
 
       {/* Alert */}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
